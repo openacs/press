@@ -22,7 +22,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     action:onevalue
     hidden_vars:onevalue
     unapproved:multirow
@@ -35,7 +35,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 
 set title "Confirm Action: $action"
-set context_bar [list $title]
+set context [list $title]
 
 # some logic to handle incoherent selections 
 # 'archive' or 'making permanent' only after release possible 

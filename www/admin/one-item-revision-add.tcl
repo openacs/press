@@ -18,7 +18,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     publication_name:onevalue
     publication_link:onevalue
     publication_date:onevalue
@@ -44,7 +44,7 @@ set package_id            [ad_conn package_id]
 set press_administrator_p [ad_permission_p $package_id press_admin]
 
 set title "Add new revision"
-set context_bar [list $title]
+set context [list $title]
 
 # get active revision of press item
 

@@ -16,7 +16,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     template_name:onevalue
     template_value:onevalue
     hidden_vars:onevalue
@@ -26,7 +26,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 
 set title "Preview Press Template"
-set context_bar [list "$title"]
+set context [list "$title"]
 
 # set variables to test case as in template-demo
 

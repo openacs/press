@@ -49,7 +49,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     template_value:onevalue
     hidden_vars:onevalue
     form_action:onevalue
@@ -65,7 +65,7 @@ set package_id    [ad_conn package_id]
 set press_admin_p [ad_permission_p $package_id press_admin]
 
 set title "Preview $action"
-set context_bar [list $title]
+set context [list $title]
 
 # Deal with the dates
 

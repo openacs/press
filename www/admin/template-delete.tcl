@@ -17,7 +17,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     template_adp:onevalue
     template_name:onevalue
     template_value:onevalue
@@ -45,7 +45,7 @@ if { [string length $template_name] > 22 } {
     set title "$template_name : Delete template"
 }
 
-set context_bar [list $title]
+set context [list $title]
 
 set hidden_vars [export_form_vars template_id]
 

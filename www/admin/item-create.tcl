@@ -13,7 +13,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     publication_date:onevalue
     release_date:onevalue
     archive_date:onevalue
@@ -28,7 +28,7 @@ set package_id [ad_conn package_id]
 set press_admin_p [ad_permission_p $package_id press_admin]
 
 set title "Create Press Item"
-set context_bar [list $title]
+set context [list $title]
 
 set template_select "<select name=template_id>"
 

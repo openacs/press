@@ -17,7 +17,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     hidden_vars:onevalue
     item_id:onevalue
     item_revisions:multirow
@@ -27,7 +27,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 
 set title "One item"
-set context_bar [list $title]
+set context [list $title]
 
 # Form vars for the 'Update' button
 

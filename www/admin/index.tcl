@@ -16,7 +16,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     press_items:multirow
     package_id:onevalue
 }
@@ -24,7 +24,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 
 set title "Press Administration"
-set context_bar ""
+set context ""
 
 # set column_names in array
 

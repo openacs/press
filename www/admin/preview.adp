@@ -7,7 +7,7 @@
 -->
 
 <master src="master">
-<property name="context_bar">@context_bar@</property>
+<property name="context">@context@</property>
 <property name="title">@title@</property>
 
 <p> Please confirm that you want to create the following press

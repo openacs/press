@@ -8,7 +8,7 @@
 -->
 
 <master src="master">
-<property name="context_bar">@context_bar@</property>
+<property name="context">@context@</property>
 <p>
 <property name="title">@title@</property>
 

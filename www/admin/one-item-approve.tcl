@@ -16,7 +16,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     
     article_title:onevalue
     publication_name:onevalue
@@ -63,7 +63,7 @@ db_1row press_item_info {
 press_item_format
 
 set title "Approve revision #$revision_id"
-set context_bar [list $title]
+set context [list $title]
 
 # Form vars for approve step
 

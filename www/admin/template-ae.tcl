@@ -19,7 +19,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     template_adp:onevalue
     template_name:onevalue
     hidden_vars:onevalue
@@ -80,6 +80,6 @@ switch $action {
     }
 }
 
-set context_bar [list $title]
+set context [list $title]
 
 ad_return_template

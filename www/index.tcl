@@ -15,7 +15,7 @@ ad_page_contract {
 } -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     
     press_admin_p:onevalue
     press_create_p:onevalue 
@@ -45,7 +45,7 @@ set press_admin_p [ad_permission_p $package_id press_admin]
 # items on a page with links to previous and next pages if
 # appropriate. 
 
-set context_bar ""
+set context ""
 
 # Set the appropriate select claus based on the view
 

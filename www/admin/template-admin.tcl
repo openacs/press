@@ -11,12 +11,12 @@ ad_page_contract {
 } {
 } -properties {
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
     template_list:onevalue
 }
 
 set title "Press Templates"
-set context_bar [list $title]
+set context [list $title]
 
 set template_list [list]
 

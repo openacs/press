@@ -27,14 +27,14 @@ ad_page_contract {
 }  -properties {
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
 
 }
 
 set package_id [ad_conn package_id]
 
 set title "Confirm Sumbission"
-set context_bar [list $title]
+set context [list $title]
 
 # with press_admin privileges, expect a release and archive date 
 
