@@ -148,7 +148,8 @@ ad_proc press_item_format {} {
 	} 
 
 	# Compile and evalute the template
-	
+
+	while {[regsub -all [template::adp_variable_regexp] $template_adp {\1@\2;noquote@} template_adp]} {}	
 	set template_code  [template::adp_compile -string $template_adp]
 	set template_value [template::adp_eval template_code]
 
