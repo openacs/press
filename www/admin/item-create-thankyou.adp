@@ -1,6 +1,6 @@
 <!-- /packages/press/www/item-create-thankyou.adp -->
 
-<master src="master">
+<master>
 <property name="context">@context@</property>
 <property name="title">@title@</property>
 

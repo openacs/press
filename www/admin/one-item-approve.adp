@@ -1,7 +1,7 @@
 <!-- /packages/press/www/one-item-approve.adp 
  $Id:  -->
 
-<master src="master">
+<master>
 <property name="context">@context@</property>
 <property name="title">@title@</property>
 
