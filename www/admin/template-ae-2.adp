@@ -11,10 +11,10 @@
 <p>The following preview shows what items formatted using the template
 <b>@template_name@</b> will look like:</p>
 
-<blockquote> @template_value@ </blockquote>
+<blockquote> @template_value;noquote@ </blockquote>
 
 <form action=template-ae-3 method=post enctype=multipart/form-data>
-@hidden_vars@
+@hidden_vars;noquote@
 <p>
 <center>
 <input type=submit value="Save Template">

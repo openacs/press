@@ -5,7 +5,7 @@
 
 <fullquery name="week">      
       <querytext>
-      select current_timestamp::date + $active_days from dual
+      select sysdate + $active_days from dual
       </querytext>
 </partialquery>
 

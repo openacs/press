@@ -16,7 +16,7 @@ $Id$
 
 <form method=post action=one-item-revision-update> 
 
-@hidden_vars@
+@hidden_vars;noquote@
 
 <table width=100% border=0>
     <tr>
@@ -71,7 +71,7 @@ $Id$
     </else>
        <td align=left colspan=4>	
 	 <table>
-	    @item_revisions.template_value@
+	    @item_revisions.template_value;noquote@
 	 </table>
         </td>
     </tr>

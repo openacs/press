@@ -13,7 +13,7 @@
 <property name="title">@title;noquote@</property>
 
 <ul>
-<list name=template_list> @template_list:item@ </list>
+<list name=template_list> @template_list:item;noquote@ </list>
 </ul>
 
 <p>

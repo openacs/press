@@ -29,7 +29,7 @@ click 'Preview' to see how the press item will look like.</p>
 
 <tr>
   <th align=right><font color=red>Publication Date</font></th>	
-  <td colspan=2>@publication_date@</td>
+  <td colspan=2>@publication_date;noquote@</td>
 </tr>
 
 <tr>
@@ -71,18 +71,18 @@ click 'Preview' to see how the press item will look like.</p>
 
 <tr>
    <th align=right>Template</th>
-   <td colspan=2>@template_select@</td>
+   <td colspan=2>@template_select;noquote@</td>
 </tr>
 
 <if @press_admin_p@ ne 0>
 <tr>
   <th align=right><font color=red>Release Date</font></th>
-  <td colspan=2>@release_date@</td>
+  <td colspan=2>@release_date;noquote@</td>
 </tr>
 
 <tr>
   <th align=right>Archive Date</th>
-  <td colspan=2>@archive_date@ <br>
+  <td colspan=2>@archive_date;noquote@ <br>
     <input type=checkbox name=permanent_p value=t>
     <b>never</b> (show it permanently)</td>
 </tr>

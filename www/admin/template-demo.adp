@@ -7,4 +7,4 @@
 
 <p>Press coverage templates:</p>
 
-@table_of_templates@
+@table_of_templates;noquote@

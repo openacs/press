@@ -30,10 +30,10 @@
  <blockquote>
   <table width=80% border=0 cellspacing=20>
   <list name=templated_list>
-        @templated_list:item@
+        @templated_list:item;noquote@
   </list>
   </table>
  </blockquote>
 </else>
 
-@press_navigation@
+@press_navigation;noquote@

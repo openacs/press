@@ -13,12 +13,12 @@
 <p> Please confirm that you want to create the following press
 item:</p>
 
-<blockquote> @template_value@ </blockquote>
+<blockquote> @template_value;noquote@ </blockquote>
 
 <p>
 
-<form method=post action=@form_action@>
-@hidden_vars@
+<form method=post action=@form_action;noquote@>
+@hidden_vars;noquote@
 <center>
 <input type=submit value=Confirm>
 </center>
