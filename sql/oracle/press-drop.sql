@@ -33,7 +33,7 @@ begin
     OPEN c_item_id;
     LOOP
         FETCH c_item_id into v_item_id;
-        content_item.delete(v_item_id);
+        content_item.del(v_item_id);
         EXIT WHEN c_item_id%NOTFOUND;
     END LOOP;
     CLOSE c_item_id;
@@ -56,7 +56,7 @@ begin
 
     -- delete press folder
 
-    content_folder.delete(v_folder_id);
+    content_folder.del(v_folder_id);
 
 end;
 /

@@ -374,7 +374,7 @@ as
         creation_user           in acs_objects.creation_user%TYPE default null
     ) return cr_press.press_id%TYPE;
 
-    procedure delete (
+    procedure del (
         item_id in cr_items.item_id%TYPE
     );  
 
@@ -527,7 +527,7 @@ as function new (
 
   -- deletes a press item along with all its revisions
 
-  procedure delete ( 
+  procedure del ( 
       item_id in cr_items.item_id%TYPE
   )
   is
@@ -536,10 +536,10 @@ as function new (
     from  cr_press 
     where press_id in (select revision_id 
                        from   cr_revisions 
-                       where  item_id = press.delete.item_id);
+                       where  item_id = press.del.item_id);
 
-    content_item.delete( item_id => press.delete.item_id );
-  end delete;
+    content_item.del( item_id => press.del.item_id );
+  end del;
 
   -- make a press item permanent by nulling the archive_date 
   -- this only applies to the currently active revision
@@ -748,7 +748,7 @@ create or replace package press_revision
       make_active_revision_p    in varchar2 default 'f'
     ) return cr_revisions.revision_id%TYPE;
 
-    procedure delete (
+    procedure del (
       revision_id in cr_revisions.revision_id%TYPE
     );
 end press_revision;
@@ -856,17 +856,17 @@ create or replace package body press_revision
   return v_revision_id;
   end new;
 
-  procedure delete (
+  procedure del (
     revision_id in cr_revisions.revision_id%TYPE
   )
   is
   begin
 
-    delete from cr_press where press_id = press_revision.delete.revision_id;
+    delete from cr_press where press_id = press_revision.del.revision_id;
 
-    content_revision.delete(press_revision.delete.revision_id);
+    content_revision.del(press_revision.del.revision_id);
 
-  end delete;
+  end del;
 end press_revision;
 /
 show errors

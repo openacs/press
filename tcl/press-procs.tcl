@@ -65,7 +65,7 @@ ad_proc press_items_delete { id_list } {
     foreach id $id_list {
 	db_exec_plsql press_item_delete {
 	    begin
-	    press.delete(item_id => :id);
+	    press.del(item_id => :id);
 	    end;
 	}
     }
