@@ -12,7 +12,7 @@
 
 <if @press_admin_p@ ne 0>
   <p>
-    <table width=100%>
+    <table width="100%">
      <tr>
       <th align=right>
        <a href="admin">Administer</a>
