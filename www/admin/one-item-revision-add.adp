@@ -17,7 +17,7 @@ already filled in.  Note that the <font color=red>red fields are required</font>
 When you're done click 'Preview' to see how the press item will look.</p>
 
 <form action=preview method=post enctype=multipart/form-data>
-@hidden_vars@
+@hidden_vars;noquote@
 <table border=0>
   <tr>
     <th align=right><font color=red>Publication</font></th>
@@ -31,7 +31,7 @@ When you're done click 'Preview' to see how the press item will look.</p>
 
   <tr>
     <th align=right><font color=red>Publication Date</font></th>	
-    <td>@publication_date@</td>
+    <td>@publication_date;noquote@</td>
   </tr>
 
   <tr>
@@ -75,20 +75,20 @@ When you're done click 'Preview' to see how the press item will look.</p>
 
   <tr>
     <th align=right>Template</th>
-    <td colspan=2>@template_select@</td>
+    <td colspan=2>@template_select;noquote@</td>
   </tr>
 
   <if @press_administrator_p@ ne 0>
 
   <tr>
     <th align=right><font color=red>Release Date</font></th>
-    <td>@release_date@</td>
+    <td>@release_date;noquote@</td>
   </tr>
 
   <tr>
     <th align=right>Archive Date</th>
-    <td>@archive_date@ <br>
-        @never_checkbox@
+    <td>@archive_date;noquote@ <br>
+        @never_checkbox;noquote@
       <b>never</b> (show it permanently)</td>
   </tr>
   </if>

@@ -32,13 +32,13 @@ Manage the items individually for approval first.
 
 
 <blockquote>
-  <list name=templated_list> @templated_list:item@ </list>
+  <list name=templated_list> @templated_list:item;noquote@ </list>
 </blockquote>
 	
 
 <center>   
    <form method=post action=process-2>	
-      @hidden_vars@
+      @hidden_vars;noquote@
       <input type=submit value="Confirm">
    </form>
 </center>
