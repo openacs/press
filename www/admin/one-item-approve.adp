@@ -9,17 +9,17 @@
 
 <form action=one-item-approve-2 method=post enctype=multipart/form-data>
 
-@hidden_vars@
+@hidden_vars;noquote@
 
 <table>
 <tr>
   <th align=right>Release Date</th>
-  <td colspan=2>@release_date@</td>
+  <td colspan=2>@release_date;noquote@</td>
 </tr>
 
 <tr>
   <th align=right>Archive Date</th>
-  <td colspan=2>@archive_date@ <br>
+  <td colspan=2>@archive_date;noquote@ <br>
     <input type=checkbox name=permanent_p value=t>
     <b>never</b> (show it permanently)</td>
 </tr>
@@ -39,7 +39,7 @@
 <li>Submitted by <font color=red>@item_creator@</font>
 <li>Creation date: <font color=red>@item_creation_date@</font>
 <li>Creation IP: @item_creation_ip@
-<li>Displayed information: <blockquote> @template_value@ </blockquote>
+<li>Displayed information: <blockquote> @template_value;noquote@ </blockquote>
 
 </ul>
 
