@@ -1,0 +1,170 @@
+<html>
+<head>
+<title>Press Requirements Document</title>
+</head>
+<body bgcolor=ffffff>
+<h1>Press Requirements Document</h1>
+
+by <a href=mailto:chiao@arsdigita.com>Chiao Cheng</a>, <a
+href=mailto:jfinkler@arsdigita.com>Josh Finkler</a>, <a
+href=mailto:stefan@arsdigita.com>Stefan Deusch</a> and <a
+href=mailto:sarah@arsdigita.com>Sarah Barwig</a>
+<hr>
+
+<h4>I. Introduction</h4>
+
+This document outlines the requirements for the ArsDigita Press application.<p>
+
+<h4>II. Vision Statement</h4>
+
+The Press application provides a way for websites to showcase and
+archive articles in which the site has been featured or which have
+subject matter of interest to the users of the website. This
+application will provide a way to archive old press content, present
+recent accomplishments, and have up-to-the-minute press items
+available to the website users. Users coming to the site who are
+unfamiliar with the company may thus be given an opportunity to see what the
+public media has to say about the company while the company is given
+the opportunity to selectively filter which press coverage is
+presented to the user. Also, users are able to see press items which
+have been submitted by community members and filtered by the website
+administration.<p>
+
+<h4>III. System/Application Overview</h4>
+
+This application is based upon one main component: the content repository. This system organizes and stores all of the press articles and references. The system provides a simple templating system so that press items can be laid out based on a variety of source material default formats, e.g. newspaper articles, journal publications, on-line publications, or even company press releases.<p>
+The Press module consists of three simple interfaces:
+<ul>
+<li>a site-wide administrator interface for creating and maintaining all press items
+<li>a registered user group interface for creating and maintaining press items contained in that group
+<li>a user interface for viewing a press item and leaving comments
+</ul>
+
+<h4>IV. Use-cases and User-scenarios</h4>
+
+Press application users will largely fall into one of three user
+groups: recipients, submitters, and administrators of press items.<p>
+
+Press recipients will include, e.g., brokers researching the relative value
+of the company for their clients, consumers interested in learning
+more about a company before making a purchasing decision, suppliers
+investigating the company's perceived order processing efficiency, and
+so on. These people will have access not only to current media
+coverage of the company's activities but also to a searchable archive
+of such articles to better help them locate individual articles of
+interest or show a more comprehensive picture of the company's public
+side.<p>
+
+Press submitters will include active members of the community who will
+be adding the articles to the site. They will find information at
+various locations, and bring them to the administrator's attention for
+inclusion in the site.<p>
+
+Press administrators will also be adding the articles to the
+site. They will be the ones choosing which press items merit display,
+deciding how many press items should appear on the company's homepage,
+what the scope of the article's application should be, et cetera. The
+press application supports group scoping which enables administrators
+of individual groups to add press events for their group only. They
+may also add public articles which may be seen by everyone.<p>
+
+<b>Ginny Mae Group-Moderator</b> finds an interesting article on rope
+toys for birds. She uploads it, using the Press interface, to the bird
+section of the Pets community website. After previewing it, she
+revises it once, then submits it for approval and publication by the
+administrator.<p>
+
+<b>Andie Admin</b> is the administrator of the Press module and either
+receives an email alert or, if she has them disabled, simply remembers
+to visit the site to approve articles the community has submitted. She
+finds the article from Ginny Mae about rope toys. She edits it for
+clarity (Ginny Mae has the tendency to ramble), and publishes it in
+the Entertainment section of the Bird section of the Pets website.<p>
+
+<b>Random Reader</b> frequents the Pets website, and he is in search
+of something for his conure to do while Random is at work. He can't
+afford the web browser setup (from research at MIT in the language
+lab) that he reads about in the Entertainment area, however, the
+article by Ginny Mae about rope toys that has just been added fits
+right into his price range.<p>
+
+<h4>V. Related Links</h4>
+
+None currently.
+
+<h4>VI.A. Requirements: The Data Model</h4>
+
+<b>10.10</b> Each press item must have a unique identifier<!--content_item+content_revision--><p>
+<b>10.20</b> Each press item must have a summary describing what is contained therein<!--content_item.description--><p>
+<b>10.30</b> Each press item must belong to one of three user_groups (registered_users, all_users, public)<!--cr_press.party_id--><p>
+<b>10.40</b> Each press item must have a title<!--content_item.title--><p>
+<b>10.50</b> Each press item must have a body<!--content_item.body--><p>
+<b>10.60</b> Each press item must have an approval_state which defaults to 'unexamined' but can be changed for approval<!--content_item.is_live--><p>
+<b>10.70</b> Each press item has an optional approval_user<!--cr_press.approval_user--><p>
+<b>10.80</b> Each press item has an optional approval_date<!--cr_press.approval_date--><p>
+<b>10.90</b> Each press item has an optional approval_ip_address<!--cr_press.approval_ip_address--><p>
+<b>10.100</b> Each press item has a required release_date<!--cr_press.release_date--><p>
+<b>10.110</b> Each press item has a required expiration_date<!--cr_press.expiration_date--><p>
+<b>10.120</b> Each press item has a required creation_date<!--acs_object.creation_date--><p>
+<b>10.130</b> Each press item has a required creation_user<!--acs_object.creation_user--><p>
+<b>10.140</b> Each press item has a required creation_ip_address<!--acs_object.creation_ip_address--><p>
+<b>10.150</b> Each press item has a revision history.<!--cr_revision-->
+<h4>VI.B. Requirements: Administrator Interface</h4>
+<b>20.10</b> The administrator can add articles<p>
+<b>20.20</b> The administrator can edit articles<p>
+<b>20.30</b> The administrator can delete articles<p>
+<b>20.40</b> The administrator can archive articles<p>
+<b>20.50</b> The administrator can approve articles<p>
+<b>20.60</b> Templating<p>
+<b>20.60.10</b> The administrator can add Templates<p>
+<b>20.60.20</b> The administrator can edit Templates<p>
+<b>20.60.30</b> The administrator can delete Templates<p>
+<b>20.60.40</b> The administrator can associate Templates with press items<p>
+<h4>VI.C. Requirements: User Group/Maintainer Administration</h4>
+<b>30.10</b> The maintainer can add articles that the administrator has to approve.<p>
+<b>30.20</b> The maintainer can edit articles that the administrator has not yet approved.<p>
+<b>30.30</b> The maintainer can delete articles that the administrator has not yet approved.<p>
+<b>30.40</b> Any user can sign up to receive press items by e-mail.<p>
+<h4>VI.D. Requirements: User Interface</h4>
+<b>40.10</b> Clickthrough tracking of how many users follow the links to the full articles should be maintained.<p>
+<b>40.20</b> Display certain number of articles per page should be adjustable by the administrator on a webpage (not the ini file).<p>
+<b>40.30</b> Allow users to click on links from the teaser page to the articles on the full display page.<p>
+<b>40.40</b> Display brief summary about the article on teaser page to entice the user to click through to the full display page.<p>
+<b>40.50</b> Access to archive of old articles.<p>
+<h4>VI.E. Requirements: Other</h4>
+<b>50.10</b> Ability to automatically archive press after a set period of time designated by the administrator.<p>
+<b>50.20</b> Allow administrator to set an article to display for an indefinite period of time (i.e. override automatic archive function)<p>
+<b>50.30</b> The administrator can specify whether article may be viewed only by a particular group or everyone.<p>
+<h4>VII. Revision History</h4>
+
+<pre>
+$Log$
+Revision 1.13  2001/01/09 03:04:58  jfinkler
+minor edit and cleanup
+
+Revision 1.12  2001/01/09 02:49:11  jfinkler
+reverted to version 1.8
+
+Revision 1.8  2000/11/27 19:39:14  sarahb
+added pre tag at bottom
+
+Revision 1.7  2000/11/22 17:42:58  deusch
+*** empty log message ***
+
+Revision 1.6  2000/11/14 01:02:17  sarahb
+added comments
+
+Revision 1.5  2000/11/10 22:33:40  sarahb
+added table, fixed typos
+
+Revision 1.4  2000/11/10 19:16:01  sarahb
+added comments from meeting 11-8
+
+Revision 1.3  2000/11/09 02:58:29  ron
+useless change
+
+Revision 1.2  2000/11/09 02:57:42  ron
+added log keyword
+</pre>
+</body>
+</html>

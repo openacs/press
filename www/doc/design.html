@@ -1,0 +1,434 @@
+<!-- /packages/press/www/doc/design.html
+
+    @author stefan@arsdigita.com
+    @author sarah@arsdigita.com
+    @creation-date 2000-12-10
+    @cvs-id $Id$
+-->
+
+<html>
+<head>
+   <title>Press Design Document</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+
+<h2>Press Design Document</h2>
+by <a href="mailto:sarah@arsdigita.com">Sarah Barwig<a/>, <a href="mailto:stefan@arsdigita.com">Stefan Deusch</a>
+<hr>
+<h3>I. Essentials</h3>
+
+<ul>
+<li>User directory: <a href="/press/">/press/</a></li>
+
+<li>Tcl procedures: <a href="/api-doc/procs-file-view?path=packages/press/tcl/press-procs.tcl">/tcl/press-procs.tcl</a></li>
+
+<li>Requirements document: <a href="/doc/press/requirements.html">/doc/press/requirements.html</a></li>
+
+<li>Data model: <a href="/doc/sql/display-sql?url=press-create.sql&package_key=press">press-create.sql</a></li>
+</ul>
+
+<h3>II. Introduction</h3>
+
+Most Web services and almost all corporate sites have a "foobar.com in
+the news" page. This page typically offers a chronological list of
+articles appearing in newspapers, magazines, etc., in which the site or
+company is featured. This differs from our News application in that
+the site publisher is linking off to other publications and not trying to
+disseminate news himself. The Press application supports site-wide press
+coverage - appropriate when one ACS installation is being used for a
+company - and subcommunity press coverage, e.g. for a service like
+<a href="http://arfdigita.org">arfdigita.org</a> where many
+organizations are using the same ACS instantiation. Anyone
+who has the administrator role in a user group can edit the press
+coverage for that group. Press items are displayed using a paging
+system. The module can be configured to display a set number of items
+on the main page, and will offer links to 'previous' and 'next' pages
+when these are available. The press administrator can revise a press item by
+adding a new revision.  Because the application employs version
+control, the administrator can switch back to a historic
+version of a press item should the need arise.
+
+<h3>III. Historical Considerations</h3>
+
+The Press application was designed by looking at the presentation
+formats appearing on sites like <a
+href=http://www.scorecard.org>www.scorecard.org</a> and <a
+href=http://www.valinux.com>www.valinux.com</a> and selecting those
+features we felt were most desirable. Our initial design was later
+modified to add pagination and access to an archive of expired
+articles based on feedback from client sites.
+
+<h3>IV. Competitive Analysis</h3>
+
+The Press application is consistent with the functionality of similar systems on the public internet.
+
+<h3>V.Design Tradeoffs</h3>
+
+By employing an application-specific templating system for this
+package, we offer site owners the benefit of simplified display
+customization on a per article basis.  The templating system adds
+additional complexity to the Press application, especially with
+respect to displaying articles.  Here, we have sacrificed usability
+for a more advanced feature set.  The use of templates will minimally
+require the application administrators to learn and use HTML and to
+employ variables used by this templating system. We have automated the
+linking function of the press module in order to prevent the
+administrator having to learn ADP-programming.
+
+<h3>VI. Data Model Discussion</h3> The Press application makes heavy
+use of the exisiting ACS Content Repository service and its API, but
+not of its templating system. A press item consists of:
+<ul>
+<li>a row-entry in
+the table cr_item, where all of the meta-information that isn't
+already stored in acs_objects concerning these items is placed, </li>
+<li>one or
+several rows in the revision table cr_revisions, and</li>
+<li>a custom table,
+cr_press, which holds the remainder of the information necessary to
+describe a press item.</li>
+</ul>
+The important template information is found in
+the table press_templates.
+<pre>
+create  table cr_press (
+    press_id                    integer
+                                constraint cr_press_id_fk references cr_revisions
+                                constraint cr_press_pk primary key,
+    -- include package_id to provide support for multiple instances
+    package_id                  integer,
+    -- constraint cr_press_package_id_nn not null,                      
+    -- information about the publication where this press item appeared
+    -- *** The journal name, the journal URL ***
+    publication_name            varchar2(100)
+                                constraint cr_press_publication_name_nn not null,
+    publication_link            varchar2(200),
+    -- *** the specific journal issue ***
+    publication_date            date not null,
+    publication_date_desc       varchar2(10),
+    -- *** the article link, pages ***
+    article_link                varchar2(400),
+    article_pages               varchar2(40),
+    article_abstract_html_p     varchar2(1) 
+                                    constraint cp_article_abstract_html_p_ck
+                                    check (article_abstract_html_p in ('t','f')),
+    -- *** support for dates when items are displayed or archived ***
+    -- unapproved release dates are null
+    release_date                date,
+    -- unscheduled archiving dates are null
+    archive_date                date,
+    -- support for approval, if ApprovalRequiredP == 1
+    approval_user               integer
+                                constraint cr_press_approval_user_fk
+                                references users,
+    approval_date               date,
+    approval_ip                 varchar2(50),
+    -- *** presentation information ***
+    -- supply own press-specific templates (see table below) until
+    -- template system is better organized and documented
+    template_id                 integer default 1 
+                                constraint cr_press_templ_id references press_templates 
+);
+</pre>
+Note that different package instances of 'press' can 
+be distinguished by the column 'package_id' (and not 
+by the inherited context_id in acs_objects).<ul>
+<li>The items are assigned to the folder 'press' in the content repository. 
+<li>The PL/SQL API provides procedures and functions to create, delete, 
+approve, archive, query, release, etc. a press item. New revisions 
+are added using the package press_revision. 
+<li>A new revision generates an entry in cr_press and cr_revisions 
+in parallel and updates the live_revision in cr_items. We opted 
+to keep all press-specific information as well as release and 
+approval information in the cr_press table such that each revision 
+has its own auditing information. There is no UI to edit a 
+revision; editing is accomplished by adding a new revision of the
+press item in question.
+</ul>
+
+<h3>Templating</h3>
+The module provides a flexible templating system to support the 
+wide range of formats needed for different sites and types of 
+press coverage. Templates can be defined for different journals 
+and styles. They can be mixed on the same site. A press item 
+contains the followings information:
+
+<ul><li>publication_name 
+    <li>publication_date 
+    <li>article_title 
+    <li>article_abstract 
+    <li>article_pages
+    <li>publication_date_desc
+</ul>
+
+<p>A press administrator can define named templates to control 
+how these pieces of information are displayed. The templates 
+are written as HTML fragments using the variables listed above, each
+of which is flanked by '@' signs (see below).
+These are the essential variables that must occur in 
+any template. A sample template might be:</p>
+
+<pre>
+      &lt;b&gt;@publication_name@&lt;/b&gt; - @article_name@ (@article_pages@)
+      &lt;dd&gt;(@publication_date@) - "@article_abstract@"
+</pre>
+
+<p>This template would be expanded into:
+
+<blockquote>
+      <dl><b>Dog's Life</b> - Planet of the Dogs (pp 50-52) 
+      <dd>(January 1, 2100) - "They used to say that every dog has 
+          his day. Little did humans know that the collapse of their 
+          society at the beginning of this millenium would give 
+          rise to a new golden age of canine rule." </dd></dl>
+</blockquote>
+
+<p>Hyperlinks to external publications and articles are inserted 
+automatically and optionally tracked using the clickthrough 
+module, currently under development in ACS4.
+
+<h3>Permissions</h3>
+With the ACS4 permissions model, the press administrator need 
+no longer be identical to the site administrator. The application 
+now has a hierarchical set of permissions which can be assigned 
+to any party as needed. The press root privilege is 
+<code>press_admin</code> which comprises <code>press_create, 
+press_delete, press_approve,</code> and <code>press_read</code>.
+
+<p>By default, <code>press_admin</code> inherits from the 
+site-wide admin. The <code>press_read</code> permission is 
+assigned to the public so that all users, including non-registered 
+users, have access to /press/. Currently, the <code>press_create</code>
+ permission is unassigned by default and left commented 
+out of the data model. Uncommenting it would assign the 
+privilege to create a press item to the context of 
+<i>registered users</i>, if this is a desired policy. 
+Approval of uploaded items, however, is still reserved 
+to the <code>press_approve</code> permission which is 
+exclusively possessed by <code>press_admin</code>. 
+Changing those permissions in /permissions/ enables the 
+site-wide admin to tailor a permission hierarchy to the 
+needs of an individual site, e.g. sharing the <i>Press 
+Administrator</i> duties among more individuals, or enabling 
+certain persons to create press items. 
+
+<h3>VII. Legal Transactions</h3>
+
+<h4>User Pages</h4>
+<ul>
+<li>View press coverage.
+<li>View archived press coverage.
+</ul>
+<h4>Press Administrator Pages</h4>
+<ul>
+<li>Add new press coverage: press.new
+<li>Edit existing press coverage: press_revision.new
+<li>Archive existing press coverage: press.archive
+<li>Make permanent existing press coverage: press.make_permanent
+<li>Approve existing press coverage: press.approve('t')
+<li>De-activate existing press coverage: press.approve('f')
+<li>Delete existing press coverage: press.delete
+<li>Create a new press template: insert a new row into press_templates
+<li>Edit a press template: update a row in press_templates
+<li>Delete a press template: delete a row in press_templates
+</ul>
+
+<h3>VIII. API</h3>
+
+Much of the API is covered in the 
+<a href="/doc/sql/display-sql?url=press-create.sql&package_key=press">
+press-create.sql</a> file. The package body press and package body 
+press_revision hold many of the most interesting PL/SQL 
+functions and procedures:  
+<ul>
+<li>press.new: creates a new press item
+<li>press.delete: deletes a press item
+<li>press.make_permanent: removes archival date from items
+<li>press.archive: archives items with a default date of now
+<li>press.approve: approves submitted items for release (for use 
+    when the general public can submit press items)
+<li>press.approve_release: sets release_date and archive_date for item
+<li>press.set_active_revision: sets one revision as the active revision
+<li>press.is_live: determines if item has a live revision
+<li>press.status: returns info as to permanent, when it will archive, 
+    when it will be released
+</ul>
+Also of interest are the Tcl procedures which are largely wrappers 
+for the PL/SQL functions and procedures and are located in the 
+<a href="/api-doc/procs-file-view?path=packages/press/tcl/press-procs.tcl">
+/tcl/press-procs.tcl</a> file:
+<ul>
+<li>press_items_archive: archives items at a certain date
+<li>press_items_make_permanent: removes archival date from items
+<li>press_items_delete: deletes press items
+<li>press_check_date_order: ensures archive date is after release date
+<li>press_coverage_samples: sets sample press variables
+<li>press_format_item: puts press variables into template
+</ul>
+
+<h3>IX. User Interface</h3> Users have a limited set of pages
+available to them. Administrator user pages are located in the
+/press/admin directory. The <code>acs_privileges</code> of press,
+along with the permissions on the <code>admin</code> directory,
+determine which parts of the pages are visible to which user
+types. Links for <b>administer</b> and <b>create press item</b> only
+appear for those parties possessesing the appropriate privileges.
+Users not authorized to view the index page - parties who were denied
+the <code>press_read</code> permission - receive a not-too-unfriendly
+<i>"You are not allowed to see this page"</i> message. The code looks
+like:
+
+<pre>
+# Display unauthorize privilege page if user is anauthorized
+if { ![ad_permission_p [ad_conn package_id] press_read] } {
+    ad_returnredirect unauthorized
+    return
+}
+</pre>
+
+<h4>Press Administrator</h4>
+The press gateway serves by default the <code>DisplayMax</code> 
+number of press items or archived press items. The rest of the 
+items can be viewed with a paging mechanism at the bottom of 
+the page. The <code>archived items | live items</code> link 
+appears, respectively, if such exist. Each item is rendered 
+through its individual template, i.e. the index page can be 
+heavily modified to match a site's appearance.
+
+<p>For users with the <code>press_admin</code> privilege, two links
+appear on the right side of the page, one to "administer" and one to
+"create a press item". The other pages are restricted to the
+press_admin, except the item-create** suite which is restricted to
+<code>press_create</code>.
+
+<p>The administer page shows a table of the active revisions of all
+press items. The active revision need not coincide with the live
+revision.  Press items can have the status of:
+
+<ul>
+  <li>approved and awaiting release 
+  <li>approved and live
+</ul>
+
+Additionally, the archive status is shown if an item is approved. 
+The archive status is either a fixed date in the future after 
+the release date or null for permanently live items. 
+
+<p>The administer page offers the option to archive, make 
+permanent, or delete one or more items at once. 
+
+<p>The one-item-admin page is accessed via links from the administer
+page. Revision administration is handled via one-item-admin page.
+
+<h3>X. Parameters</h3>
+
+<p>The press application has three customizable parameters which 
+must be set for each package instance.</p>
+
+<dl>
+<dt><code>DaysUntilArchive</code></dt>
+<dd>how many days after being released 
+         until a press item goes into the archives</dd>
+<dt><code>DisplayMax</code></dt>
+<dd>how many items are shown on the index 
+         page (for live and archived items)</dd>
+<dt><code>ClickThroughP</code></dt>
+<dd>whether or not Hyperlinks should go 
+         through the click-through module</dd>
+</dl>
+
+<h3>XI. Acceptance Tests</h3>
+
+You should test adding, viewing, editing, changing revisions, changing status and deleting a press item:
+
+<ul>
+<li>Go to /press/ and click on the Administer link.
+<li>Add a press item
+<li>Verify that the item shows up on the admin side and the user side with the correct number of days left for display.
+<li>Add a new template to the system using the administer templates link from the Administer page.
+<li>Revise your press item to use the new template
+<li>Verify that the new revision is active, and that it is displayed on the user side.
+<li>On the admin side, archive the item.
+<li>Ensure that the user now sees it as an archived item.
+<li>On the admin side, make the item permanent.
+<li>Ensure that the user now sees it as a live item.
+<li>Delete the item.
+<li>Delete the template.
+</ul>
+
+<h3>XII. Future Improvements/Areas of Change</h3>
+<ul>
+<li>Definition of necessary tags in a file, and check for 
+    those when new template is created
+<li>Template check for inconsistent (e.g. an unclosed table) 
+    HTML which can screw up entire page
+<li>Hook into clickthrough module once that is completed 
+    (currently there is only a mockup page, ct.tcl)
+<li>Maybe a press privilege Request/Approval system between 
+    the press_admin and users
+</ul>
+
+
+
+<h3>XIII.  Revision History</h3>
+<table cellpadding=2 cellspacing=2 width=90% bgcolor=#efefef>
+<tr bgcolor=#e0e0e0>
+    <th width=10%>Document Revision #</th>
+    <th width=50%>Action Taken, Notes</th>
+    <th>When?(mm/dd/yyyy)</th>
+    <th>By Whom?</th>
+</tr>
+<tr>
+   <td>0.1</td>
+   <td>Creation</td>
+   <td>12/08/2000</td>
+   <td>Stefan Deusch</td>
+</tr>
+<tr>
+   <td>0.2</td>
+   <td>Proofreading</td>
+   <td>12/11/2000</td>
+   <td>Sarah Barwig</td>
+</tr>
+
+<tr>
+   <td>0.3</td>
+   <td>More proofreading</td>
+   <td>12/14/2000</td>
+   <td>Josh Finkler</td>
+</tr>
+
+<tr>
+   <td>0.4</td>
+   <td>Clarified PL/SQL functions</td>
+   <td>12/14/2000</td>
+   <td>Sarah Barwig</td>
+</tr>
+
+<tr>
+<td>0.5</td>
+<td>Light final edit</td>
+<td>12/18/2000</td>
+<td>Josh Finkler</td>
+</tr>
+
+<tr>
+<td>0.6</td>
+<td>Clarified UI and press_admin functions</td>
+<td>01/11/2001</td>
+<td>Sarah Barwig</td>
+</tr>
+
+<tr>
+<td>0.7</td>
+<td>Final pass edit</td>
+<td>01/12/2001</td>
+<td>Josh Finkler</td>
+</tr>
+
+</table>
+
+
+
+</body>
+</html>
