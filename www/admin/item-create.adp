@@ -5,8 +5,8 @@
  -->
 
 <master>
-<property name="context">@context@</property>
-<property name="title">@title@</property>
+<property name="context">@context;noquote@</property>
+<property name="title">@title;noquote@</property>
 
 <p>Use the following form to define your press item. Note that the
 <font color=red>red fields are required</font>.   When you're done

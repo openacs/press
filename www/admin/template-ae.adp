@@ -7,8 +7,8 @@
 -->
 
 <master>
-<property name="context">@context@</property>
-<property name="title">@title@</property>
+<property name="context">@context;noquote@</property>
+<property name="title">@title;noquote@</property>
 
 
 <form action=template-ae-2 method=post enctype=multipart/form-data>

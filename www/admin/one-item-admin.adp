@@ -5,8 +5,8 @@ $Id$
 -->
 
 <master>
-<property name="context">@context@</property>
-<property name="title">@title@</property>
+<property name="context">@context;noquote@</property>
+<property name="title">@title;noquote@</property>
 
 <p>Options:</p>
 

@@ -7,8 +7,8 @@
 -->
 
 <master>
-<property name="context">@context@</property>
-<property name="title">@title@</property>
+<property name="context">@context;noquote@</property>
+<property name="title">@title;noquote@</property>
 
 
 <p>Use the following form to add a revision to this press item.
