@@ -33,7 +33,7 @@ set package_id [ad_conn package_id]
 
 if ![ad_permission_p $package_id press_read] {
     ad_returnredirect unauthorized
-    return
+    ad_script_abort
 }
 
 # Provide administrators with a link to the local admin pages

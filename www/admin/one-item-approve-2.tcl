@@ -31,7 +31,7 @@ set archive_date "${archive_date.year}-${archive_date.month}-${archive_date.day}
 
 if { [dt_interval_check $release_date $archive_date] < 0 } {
     ad_return_error "Scheduling Error" "The archive date must be AFTER the release date."
-    return
+    ad_script_abort
 }                                                
 
 set item_id [db_string revision_root \

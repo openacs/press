@@ -20,4 +20,4 @@ db_exec_plsql update_forum {
     end;
 }
 
-ns_returnredirect "one-item-admin?item_id=$item_id"
+ad_returnredirect "one-item-admin?item_id=$item_id"

@@ -37,6 +37,7 @@ switch $action {
 
     default {
 	ad_return_error "Invalid Action" "Valid actions are edit, create"
+        ad_script_abort
     }
 }
 
