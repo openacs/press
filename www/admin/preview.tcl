@@ -40,7 +40,7 @@ ad_page_contract {
 } -validate {
     content_html -requires {article_abstract html_p} {
         if [string eq $html_p "t"] {
-            set complaint [ad_check_for_naughty_html $article_abstract]
+            set complaint [ad_html_security_check $article_abstract]
             if ![empty_string_p $complaint] {
                 ad_complain $complaint
             }
