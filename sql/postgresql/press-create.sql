@@ -360,6 +360,10 @@ end;
 select inline_0 ();
 drop function inline_0 ();
 
+-- press plsql
+
+\i press-package-create.sql
+
 --
 -- views on cr_press that combine information from cr_press, cr_items, cr_revisions 
 --
@@ -454,5 +458,3 @@ select revision_id,
    and cp.template_id   = pt.template_id
    and ci.item_id       = cr.item_id
    and ao.creation_user = persons.person_id;
-
-\i press-package-create.sql
