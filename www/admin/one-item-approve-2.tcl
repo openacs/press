@@ -9,7 +9,7 @@ ad_page_contract {
 
     @author stefan@arsdigita.com
     @creation-date 2000-12-04
-    @cvs-id $Id: 
+    @cvs-id $Id$
 
 } { 
     revision_id

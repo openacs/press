@@ -8,7 +8,7 @@ ad_page_contract {
     
     @author Stefan Deusch (stefan@arsdigita.com)
     @creation-date November 24, 2000
-    @$Id$
+    @cvs-id $Id$
 
 } {
  
