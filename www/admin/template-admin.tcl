@@ -23,17 +23,7 @@ set template_list [list]
 # Grab the sample information
 
 
-db_foreach press_templates {
-    select t.template_id,
-           t.template_name,
-           t.template_adp,
-           count(p.template_id) as template_usage
-    from   press_templates t, 
-           press_items_approved p
-    where  t.template_id = p.template_id(+)
-    group  by t.template_id, t.template_name, t.template_adp
-    order  by t.template_name
-} {
+db_foreach press_templates {} {
 
     set template_item "
     <li>$template_name (used $template_usage time[expr {$template_usage != 1 ? "s" : ""}])

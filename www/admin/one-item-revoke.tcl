@@ -22,24 +22,11 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 # commented out because of admin directory
 # ad_require_permission $package_id press_admin
-set revoke_p "f"
+set approve_p "f"
 
-db_exec_plsql press_item_make_permanent {
-    begin
-    press.approve(
-    press_id => :revision_id,
-    approve_p => :revoke_p
-    );
-    end;
-}	
+db_exec_plsql press_item_revoke_release {}
 
-set item_id [db_string revision_root " 
-select
-item_id
-from
-cr_revisions
-where revision_id = :revision_id"]
-
+set item_id [db_string revision_root {}]
 
 # return to one-item-admin.tcl page
 ad_returnredirect one-item-admin?item_id=$item_id

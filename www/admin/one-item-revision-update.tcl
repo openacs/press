@@ -14,10 +14,6 @@ ad_page_contract {
     revision_id:integer,notnull
 }
 
-db_exec_plsql update_forum {
-    begin
-    press.set_active_revision (:revision_id);
-    end;
-}
+db_exec_plsql update_press_revision {}
 
 ad_returnredirect "one-item-admin?item_id=$item_id"

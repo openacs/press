@@ -20,13 +20,8 @@ set package_id [ad_conn package_id]
 # delete template
 
 
-db_dml reset_press_templates "
-    update cr_press
-    set template_id = (select template_id from press_templates where template_name='Default')
-    where template_id = :template_id"
+db_dml reset_press_templates {}
 
-db_dml delete_template "
-    delete from press_templates
-    where template_id = :template_id"
+db_dml delete_template {}
 
 ad_returnredirect template-admin

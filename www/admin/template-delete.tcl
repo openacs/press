@@ -27,12 +27,7 @@ ad_page_contract {
 
 set package_id [ad_conn package_id]
 
-db_1row press_item_info {
-    select template_name,
-           template_adp
-    from   press_templates
-    where  template_id = :template_id
-}
+db_1row template_select {}
 
 # Generate the preview
 

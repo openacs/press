@@ -43,7 +43,7 @@ append template_select "</select>"
 
 set active_days [ad_parameter ActiveDays "press" 7]
 
-set proj_archival_date [db_string week "select sysdate + $active_days from dual"]
+set proj_archival_date [db_string week {}]
 
 set release_date     [dt_widget_datetime -default now release_date days]
 set archive_date     [dt_widget_datetime -default $proj_archival_date archive_date days]

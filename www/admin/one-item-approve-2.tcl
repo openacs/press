@@ -34,14 +34,9 @@ if { [dt_interval_check $release_date $archive_date] < 0 } {
     ad_script_abort
 }                                                
 
-set item_id [db_string revision_root \
-	"select item_id from cr_revisions where revision_id = :revision_id"]
+set item_id [db_string revision_root {}]
 
-db_exec_plsql press_item_approve_release {
-    begin
-    press.approve_release(:revision_id,:release_date,:archive_date);
-    end;
-}	
+db_exec_plsql press_item_approve_release {}
 
 ad_returnredirect "one-item-admin?item_id=$item_id"
 

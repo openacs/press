@@ -5,6 +5,7 @@ ad_library {
 
     @author stefan@arsdigita.com
     @author sarah@arsdigita.com
+    @author michael@steigman.net
     @creation-date 2000-12-1
     @cvs-id $Id$
 
@@ -21,22 +22,18 @@ ad_proc press_items_archive { id_list when } {
 
     switch [join $when] { 
 	"now" {
-	    set archive_date [db_string release_now "select sysdate from dual"]
+	    set archive_date [db_string now {}]
 	}
 	"next week" {
-	    set archive_date [db_string release_now "select next_day(sysdate,'Monday') from dual"]
+	    set archive_date [db_string next_week {}]
 	}
 	"next month" { 
-	    set archive_date [db_string release_now "select add_months(sysdate,1) from dual"]
+	    set archive_date [db_string next_month {}]
 	}
     }
     
     foreach id $id_list {
-	db_exec_plsql press_item_archive {
-	    begin
-	    press.archive(item_id => :id, archive_date => :archive_date);
-	    end;
-	}
+	db_exec_plsql press_item_archive {}
     }   
 }
 
@@ -48,11 +45,7 @@ ad_proc press_items_make_permanent { id_list } {
     set package_id [ad_conn package_id]
     ad_require_permission $package_id press_admin
     foreach id $id_list {
-	db_exec_plsql press_item_make_permanent {
-	    begin
-	    press.make_permanent(item_id => :id);
-	    end;
-	}	    
+	db_exec_plsql press_item_make_permanent {}
     }
 }
 
@@ -63,11 +56,7 @@ ad_proc press_items_delete { id_list } {
     set package_id [ad_conn package_id]
     ad_require_permission $package_id press_delete
     foreach id $id_list {
-	db_exec_plsql press_item_delete {
-	    begin
-	    press.del(item_id => :id);
-	    end;
-	}
+	db_exec_plsql press_item_delete {}
     }
 }
 
@@ -180,11 +169,7 @@ ad_proc press_template_select {
 } {
     set template_select "<select name=template_id>"
 
-    db_foreach template_list {
-	select template_id   as tid,
-	       template_name as tname
-	from   press_templates
-    } {
+    db_foreach template_list {} {
 	if {[string equal $tid $template_default]} {
 	    append template_select "<option value=$tid selected>$tname</option>\n"
 	} else {

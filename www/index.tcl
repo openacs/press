@@ -5,6 +5,7 @@ ad_page_contract {
     Index page for the press application. Displays a list of published press item. 
     
     @author Stefan Deusch (stefan@arsdigita.com)
+    @author Michael Steigman (michael@steigman.net)
     @creation-date 2000-11-22
     @cvs-id $Id$
 } {
@@ -51,12 +52,10 @@ set context ""
 
 if [string equal $view archive] {
     set title "Press Archives"
-    set press_items_select "and archive_date <= sysdate"
+    set view_clause [db_map view_clause_archive]
 } else {
     set title "Press"
-    set press_items_select "
-    and release_date <= sysdate
-    and (archive_date > sysdate or archive_date is null)"
+    set view_clause [db_map view_clause_live]
 }
 
 # pagination 
@@ -65,23 +64,7 @@ set count -1
 set display_max [ad_parameter DisplayMax press 10]
 set active_days [ad_parameter ActiveDays press 30]
 
-db_foreach press_items "
-    select   item_id,
-             publication_name,
-             publication_link,
-             publication_date,
-             publication_date_desc,
-             article_title,
-             article_abstract,
-             article_link,
-             article_pages,
-             html_p,
-             template_adp
-    from     press_items_approved
-    where    package_id = :package_id
-    $press_items_select
-    order by publication_date desc
-" {
+db_foreach press_items {} {
     incr count
 
     if { $count < $start } {
@@ -127,12 +110,9 @@ set press_navigation "<p align=center>[join $press_navigation " | "]</p>"
 # appropriate.
 
 if [string equal $view archive] {
-    append press_navigation "<p>Return to <a href=\"\">current press items</a>.</p>"
+    append press_navigation "<p>Return to <a href=\"index\">current press items</a>.</p>"
 } else {
-    set archived_p [db_string archive_count "
-    select count(*)
-    from   press_items_approved
-    where  archive_date <= sysdate"]
+    set archived_p [db_string archive_count {}]
 
     if $archived_p {
 	append press_navigation "<p>There are additional press items

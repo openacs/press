@@ -48,26 +48,7 @@ set context [list $title]
 
 # get active revision of press item
 
-db_0or1row item  "
-select pr.revision_id,
-       publication_name,
-       publication_link,
-       publication_date as item_publication_date,
-       publication_date_desc,
-       article_title,
-       article_link,
-       article_pages,
-       article_abstract,
-       html_p as article_abstract_html_p,
-       template_id,
-       template_name,
-       release_date as item_release_date,
-       archive_date as item_archive_date,
-       status
-from   press_item_revisions pr
-where  pr.item_id = :item_id
-and    package_id = :package_id
-and    content_revision.is_live(revision_id) = 't'"
+db_0or1row item {}
 
 set never_checkbox "<input type=checkbox name=permanent_p value=t "
 

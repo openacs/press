@@ -39,32 +39,8 @@ set hidden_vars [export_form_vars item_id]
 # although the actual value is defined by the call to
 # press_item_format. 
 
-db_multirow item_revisions item_revs_list {
-    select item_id,
-           revision_id,
-           publication_name,
-           publication_link,
-           publication_date,
-           publication_date_desc,
-           article_title,
-           article_link,
-           article_pages,
-           article_abstract,
-           html_p,
-           creation_date,
-           status,
-           item_creator,
-           creation_ip,
-           decode(status,'unapproved',0,1) as approved_p,
-           template_id,
-           template_adp,
-           null as template_value,
-           decode(content_revision.is_live(revision_id),'t',1,0) as is_live_p
-    from   press_item_revisions
-    where  item_id    = :item_id
-    and    package_id = :package_id 
-    order  by revision_id desc
-} {
+db_multirow item_revisions item_revs_list {} {
+
     # Now call the formatting procedure to fill in the correct value
     # for "template_value".
 

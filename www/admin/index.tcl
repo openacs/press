@@ -37,16 +37,7 @@ set column_names(5) "Status"
 
 # administrator sees all press items
 
-db_multirow press_items itemlist "
-select item_id,
-       press_id,
-       publication_name,
-       article_title,
-       release_date,
-       status
-from   press_items
-where  package_id = :package_id 
-order  by :orderby desc"
+db_multirow press_items itemlist {}
 
 ad_return_template
 

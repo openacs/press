@@ -47,14 +47,14 @@ if { $press_admin_p == 1 && $permanent_p == "t"} {
 # Parent root folder where press_items live
 
 set package_id [ad_conn package_id]
-set parent_id  [db_string press_folder_id "select content_item.get_id('press') from dual"]
+set parent_id  [db_string press_folder_id {}]
 
 # build name for content-repository
 
-set item_id [db_string object_id "select acs_object_id_seq.nextval from dual"]
+set item_id [db_string object_id {}]
 
 set    name "press-"
-append name [db_string datestring "select to_char(sysdate, 'YYYYMMDD') from dual"]
+append name [db_string datestring {}]
 append name "-$item_id"
 
 # get creation info
@@ -94,37 +94,7 @@ set txt [db_null]
 
 # do insert
 
-set press_id [db_exec_plsql create_press_item "
-begin
-  :1 := press.new(
-    name                  => :name,
-    publication_name      => :publication_name,
-    publication_link      => :publication_link,
-    publication_date      => :publication_date,
-    publication_date_desc => :publication_date_desc,
-    article_link          => :article_link,
-    article_pages         => :article_pages,
-    article_abstract_html_p => :html_p,
-    approval_user => :approval_user,
-    approval_date => :approval_date, 
-    approval_ip   => :approval_ip,
-    release_date  => :release_date,
-    archive_date  => :archive_date,
-    package_id    => :package_id,
-    parent_id     => :parent_id,
-    item_id       => :item_id,
-    title         => :article_title,
-    description   => :article_abstract,
-    mime_type     => :mime_type,
-    template_id   => :template_id,
-    text          => :txt,
-    is_live_p     => :live_revision_p,
-    creation_date => :creation_date,
-    creation_ip   => :creation_ip,
-    creation_user => :creation_user
-);
-end;"]
-
+set press_id [db_exec_plsql create_press_item {}]
 
 # privilege-dependant redirects
 
