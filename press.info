@@ -9,7 +9,6 @@
     <version name="4.0.1" url="http://www.arsdigita.com/acs-repository/download/apm/press-4.0.1.apm">
     <database-support>
         <database>oracle</database>
-        <database>postgresql</database>
     </database-support>
         <owner url="mailto:sarah@arsdigita.com">Sarah Barwig</owner>
         <summary>Press allows publishers to display external press coverage of their site.</summary>
