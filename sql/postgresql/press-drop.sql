@@ -121,7 +121,7 @@ select content_type__drop_attribute (
      'archive_date',    -- attribute_name
     'f'                 -- drop_column
 );
--- assignement to an authorized user for approval
+-- assignment to an authorized user for approval
 select content_type__drop_attribute (
     'press',            -- content_type
     'approval_user',    -- attribute_name

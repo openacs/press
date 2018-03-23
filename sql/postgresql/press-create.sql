@@ -287,7 +287,7 @@ select content_type__create_attribute (
     'timestamptz'       -- column_spec
 );
 
--- assignement to an authorized user for approval
+-- assignment to an authorized user for approval
 
 select content_type__create_attribute (
     'press',            -- content_type

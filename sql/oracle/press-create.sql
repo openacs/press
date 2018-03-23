@@ -272,7 +272,7 @@ attr_id := content_type.create_attribute (
     column_spec    => 'date'
 );
 
--- assignement to an authorized user for approval
+-- assignment to an authorized user for approval
 
 attr_id := content_type.create_attribute (
     content_type   => 'press',

@@ -109,7 +109,7 @@ content_type.drop_attribute (
     content_type   => 'press',
     attribute_name => 'archive_date'
 );
--- assignement to an authorized user for approval
+-- assignment to an authorized user for approval
 content_type.drop_attribute (
     content_type   => 'press',
     attribute_name => 'approval_user'
