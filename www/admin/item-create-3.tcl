@@ -96,7 +96,7 @@ set txt [db_null]
 
 set press_id [db_exec_plsql create_press_item {}]
 
-# privilege-dependant redirects
+# privilege-dependent redirects
 
 if { $press_admin_p == 0 } {
     ad_return_template item-create-thankyou
