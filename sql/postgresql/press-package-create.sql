@@ -265,7 +265,7 @@ begin
  
 end;' language 'plpgsql';
 
--- the status function returns information on the pulish or archive status
+-- the status function returns information on the publish or archive status
 -- it does not make any checks on the order of release_date and archive_date
 
 create function press__status (integer)
