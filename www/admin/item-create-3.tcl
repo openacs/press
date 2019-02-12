@@ -9,7 +9,7 @@ ad_page_contract {
     @author stefan@arsdigita.com
     @creation-date 2000-11-14
     @cvs-id $Id$
-    
+
 } {
     publication_name:notnull
     {publication_link: ""}
@@ -36,13 +36,13 @@ set package_id [ad_conn package_id]
 set title "Confirm Sumbission"
 set context [list $title]
 
-# with press_admin privileges, expect a release and archive date 
+# with press_admin privileges, expect a release and archive date
 
 set press_admin_p [ad_permission_p $package_id press_admin]
 
 if { $press_admin_p == 1 && $permanent_p == "t"} {
     set archive_date ""
-} 
+}
 
 # Parent root folder where press_items live
 
@@ -63,7 +63,7 @@ set creation_date [dt_sysdate]
 set creation_ip   [ad_conn "peeraddr"]
 set creation_user [ad_conn "user_id"]
 
-# get approval info only if the administrator 
+# get approval info only if the administrator
 # is creating and approving the press item in one step
 
 if { [ad_permission_p $package_id press_admin] } {
@@ -87,7 +87,7 @@ if {[string match $html_p t]} {
 }
 
 # reserve empty clob for future
-# this will need to be filled in when the news module 
+# this will need to be filled in when the news module
 # extends this press module
 
 set txt ""
@@ -105,11 +105,8 @@ if { $press_admin_p == 0 } {
 
 }
 
-
-
-
-
-
-
-
-
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

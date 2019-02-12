@@ -2,14 +2,14 @@
 
 ad_page_contract {
 
-    This page adds a new revision to a press item 
+    This page adds a new revision to a press item
     and redirects to the one-item-admin page of that item
 
     @author stefan@arsdigita.com
     @creation-date 12-1-2000
     @cvs-id $Id$
 
-} { 
+} {
     item_id:integer
     publication_name:notnull
     {publication_link ""}
@@ -38,7 +38,7 @@ set creation_ip   [ad_conn "peeraddr"]
 set creation_user [ad_conn "user_id"]
 
 
-# this should only be used when admin is making revision 
+# this should only be used when admin is making revision
 # live at time of writing...
 
 if { [ad_permission_p $package_id press_admin] } {
@@ -73,3 +73,8 @@ db_exec_plsql create_press_item_revision {}
 
 ad_returnredirect "one-item-admin?item_id=$item_id"
 
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
