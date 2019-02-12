@@ -12,12 +12,12 @@ ad_page_contract {
 } { 
     item_id:integer
     publication_name:notnull
-    {publication_link "[db_null]"}
+    {publication_link ""}
     publication_date:notnull
-    {publication_date_desc "[db_null]"}
+    {publication_date_desc ""}
     article_title:notnull
-    {article_link:trim "[db_null]"}
-    {article_pages:trim "[db_null]"}
+    {article_link:trim ""}
+    {article_pages:trim ""}
     article_abstract:notnull,allhtml,trim
     html_p:notnull
     release_date:notnull
@@ -29,7 +29,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 
 if {$permanent_p == "t"} {
-    set archive_date [db_null]
+    set archive_date ""
 }
 
 # Get creation info
@@ -46,9 +46,9 @@ if { [ad_permission_p $package_id press_admin] } {
     set approval_ip   [ad_conn "peeraddr"]
     set approval_date [dt_sysdate]
 } else {
-    set approval_user [db_null]
-    set approval_ip   [db_null]
-    set approval_date [db_null]
+    set approval_user ""
+    set approval_ip   ""
+    set approval_date ""
 }
 
 # set mime_type
@@ -61,7 +61,7 @@ if {[string match $html_p t]} {
 
 # reserve empty clob for future
 
-set txt [db_null]
+set txt ""
 
 # make new revision the active revision
 

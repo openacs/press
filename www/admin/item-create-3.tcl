@@ -12,15 +12,15 @@ ad_page_contract {
     
 } {
     publication_name:notnull
-    {publication_link: "[db_null]"}
+    {publication_link: ""}
     publication_date:notnull
-    {publication_date_desc: "[db_null]"}
+    {publication_date_desc: ""}
     article_title:notnull
-    {article_link:trim "[db_null]"}
+    {article_link:trim ""}
     article_abstract:notnull,allhtml,trim
-    {article_pages:trim "[db_null]"}
-    {release_date:trim  "[db_null]"}
-    {archive_date:trim  "[db_null]"}
+    {article_pages:trim ""}
+    {release_date:trim  ""}
+    {archive_date:trim  ""}
     html_p:notnull
     permanent_p:notnull
     template_id:integer,notnull
@@ -41,7 +41,7 @@ set context [list $title]
 set press_admin_p [ad_permission_p $package_id press_admin]
 
 if { $press_admin_p == 1 && $permanent_p == "t"} {
-    set archive_date [db_null]
+    set archive_date ""
 } 
 
 # Parent root folder where press_items live
@@ -72,9 +72,9 @@ if { [ad_permission_p $package_id press_admin] } {
     set approval_date [dt_sysdate]
     set live_revision_p "t"
 } else {
-    set approval_user [db_null]
-    set approval_ip   [db_null]
-    set approval_date [db_null]
+    set approval_user ""
+    set approval_ip   ""
+    set approval_date ""
     set live_revision_p "f"
 }
 
@@ -90,7 +90,7 @@ if {[string match $html_p t]} {
 # this will need to be filled in when the news module 
 # extends this press module
 
-set txt [db_null]
+set txt ""
 
 # do insert
 
